@@ -1,7 +1,7 @@
-
-export function createGallery (images) { 
-    const markUp = images.map ((image)=>{
-        return `<li class="gallery-item">
+export function createGallery(images) {
+  const markUp = images
+    .map(image => {
+      return `<li class="gallery-item">
     <a class="gallery-link" href="${image.original}">
     <img
       class="gallery-image"
@@ -28,7 +28,8 @@ export function createGallery (images) {
   </li>
 </ul>
     </a>
-    </li>`
-    }).join('');
-    return markUp();
+    </li>`;
+    })
+    .join('');
+  return markUp;
 }
