@@ -8,48 +8,41 @@ import { createGallery } from './js/render-functions';
 
 import { fetchImages } from './js/pixabay-api';
 
-console.log(document);
-
+const instanceSimpleLightbox = new SimpleLightbox('.imagebox a', {});
 const searchForm = document.querySelector('.form');
 const galleryList = document.querySelector('.imagebox');
 
 searchForm.addEventListener('submit', onSubmit);
-function onSubmit(eve) {
-  eve.preventDefault();
+function onSubmit(event) {
+  event.preventDefault();
   galleryList.innerHTML = '';
-  const query = eve.target.elements.input.value.trim();
+  const query = event.target.elements.input.value.trim();
   if (!query) {
     iziToast.warning({
       title: 'Hey',
-      message: "It's alive! Congratulations!",
+      message: 'Try to enter the desired value',
     });
     return;
-}
-
-  fetchImages(query).then(response => {
-    if (response.hits.length === 0) {
+  }
+  fetchImages(query)
+    .then(response => {
+      if (response.hits.length === 0) {
+        iziToast.error({
+          title: 'Hey',
+          message:
+            'Sorry, there are no images matching your search query. Please try again!',
+            
+        });
+        return;
+      }
+      const markUp = createGallery(response.hits);
+      galleryList.innerHTML = markUp;
+      instanceSimpleLightbox.refresh();
+    })
+    .catch(error => {
       iziToast.error({
         title: 'Hey',
-        message:
-          'Sorry, there are no images matching your search query. Please try again!',
+        message: `${error.message}`,
       });
-      return;
-    }
-    console.log(response);
-
-    const markUp = createGallery(response.hits);
-    galleryList.innerHTML = markUp;
-    console.log(markUp);
-  }
- ) .catch((error)=>{
-    iziToast.error({
-        title: 'Hey',
-        message:
-          `${error.message}`,
-      });
-
- })
- 
-
-
+    });
 }
