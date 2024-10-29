@@ -4,6 +4,8 @@ export function createGallery(images) {
       return `<li class="gallery-item">
     <a class="gallery-link" href="${image.largeImageURL}">
     <img
+    width="360"
+    height="152"
       class="gallery-image"
       src="${image.webformatURL}"
       data-source="${image.largeImageURL}"

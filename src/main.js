@@ -19,8 +19,8 @@ function onSubmit(event) {
   const query = event.target.elements.input.value.trim();
   if (!query) {
     iziToast.warning({
-      title: 'Hey',
       message: 'Try to enter the desired value',
+      position: 'topRight'
     });
     return;
   }
@@ -28,10 +28,12 @@ function onSubmit(event) {
     .then(response => {
       if (response.hits.length === 0) {
         iziToast.error({
-          title: 'Hey',
           message:
             'Sorry, there are no images matching your search query. Please try again!',
-            
+            position: 'topRight',
+            maxWidth: 400,
+            backgroundColor: "#ef4040",
+            messageColor: "#fff",
         });
         return;
       }
